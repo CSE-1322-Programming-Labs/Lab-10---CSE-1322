@@ -18,15 +18,49 @@ public class Driver {
         return s+=repeatNTimes(s,count-1);
     }
 
-    private static String stringReverser (String s2){
-        if(s2.isEmpty()) return s2;
-        //remove the first letter, and then recurse the method. Once the string is empty, add all the first letters back.
-        return stringReverser(s2.substring(1))+s2.charAt(0);
-    }
-    //Overloaded method to call the helper method
+    //Recursive method to see if 2 strings are the reverse of each other.
     public static boolean isReverse(String s1,String s2){
-        if(s1.length() != s2.length()) return false;
-        return s1.equals((stringReverser(s2)));
+        //Guard Clause
+        if(s1.length()!=s2.length()){
+            return false;
+        }
+        //Base case
+        //If it made it to this point, it is equal since nothing equals nothing.
+        if(s1.isEmpty()){
+            return true;
+        //If the first character and the last character of the first and second strings don't match, instantly we know it's false.
+        } else if(s1.charAt(0)!=s2.charAt(s2.length()-1)){
+            return false;
+        //Otherwise, we do not know if the String is reversed, so we must keep going until we have a decisive answer.
+        } else{
+            return isReverse(s1.substring(1),s2.substring(0,s2.length()-1));
+        }
+    }
+
+    //Alternative way of doing it more efficiently
+    
+    //Overloaded method to call reverse.
+    public static boolean reverse(String s1,String s2){
+        if(s1.length()!=s2.length()){
+            return false;
+        }else{
+            return reverse(s1,s2,0);
+        }
+    }
+    
+    //recursive method that uses a double pointer to see if 2 strings are equal.
+    public static boolean reverse(String s1,String s2,int count){
+        //Base case
+        //If it made it to this point, then we know we are done since we have made the pointer go all the way through the word.
+        if(count==s1.length()){
+            return true;
+            //If the first character and the last character of the first and second strings don't match, instantly we know it's false.
+        } else if(s1.charAt(count)!=s2.charAt(s2.length()-count-1)){
+            return false;
+            //Otherwise, we do not know if the String is reversed, so we must keep going until we have a decisive answer.
+        } else{
+            return reverse(s1,s2,count+1);
+        }
     }
 
 }
